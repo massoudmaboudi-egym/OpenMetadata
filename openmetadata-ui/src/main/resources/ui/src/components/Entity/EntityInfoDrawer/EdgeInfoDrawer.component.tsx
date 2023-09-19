@@ -12,7 +12,7 @@
  */
 
 import { CloseOutlined } from '@ant-design/icons';
-import { Col, Divider, Drawer, Row, Typography } from 'antd';
+import { Button, Col, Divider, Drawer, Row, Typography } from 'antd';
 import { isUndefined } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -30,7 +30,8 @@ import {
   EdgeInformationType,
 } from './EntityInfoDrawer.interface';
 import './EntityInfoDrawer.style.less';
-
+// import {TestCase} from "../../../generated/tests/testCase";
+import AddCustomTestCaseModal from '../../AddCustomDataQualityTest/AddCustomTestCaseModal';
 const EdgeInfoDrawer = ({
   edge,
   visible,
@@ -40,6 +41,7 @@ const EdgeInfoDrawer = ({
   const [edgeData, setEdgeData] = useState<EdgeInformationType>();
   const [mysqlQuery, setMysqlQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [customTestCaseShowing, setCustomTestCaseShowing] = useState(false);
   const { t } = useTranslation();
 
   const getEdgeInfo = () => {
@@ -103,6 +105,14 @@ const EdgeInfoDrawer = ({
     setMysqlQuery(edge.data.edge?.lineageDetails?.sqlQuery);
   }, [edge, visible]);
 
+  const handleAddColumnTestCase = () => {
+    setCustomTestCaseShowing(true);
+  };
+
+  const handleAddColumnTestCaseCancel = () => {
+    setCustomTestCaseShowing(false);
+  };
+
   return (
     <Drawer
       destroyOnClose
@@ -139,6 +149,44 @@ const EdgeInfoDrawer = ({
                   </Col>
                 )
             )}
+          {edgeData?.sourceColumn?.value && (
+            <>
+              <Col span={24}>
+                <Divider />
+                <Typography.Paragraph className="summary-panel-section-title">
+                  {`${t('label.test-case-plural')}:`}
+                </Typography.Paragraph>
+                {edge?.data.edge?.description?.trim() ? (
+                  <RichTextEditorPreviewer
+                    markdown={edge?.data.edge?.description}
+                  />
+                ) : (
+                  <>
+                    {edge.data.testSuite}
+                    <Button
+                      className="ant-btn ant-btn-primary ant-btn-background-ghost"
+                      // data-testid={`remove-${record.name}`}
+                      // disabled={!testCaseDeletePermission}
+                      size="small"
+                      // type="text"
+                      onClick={handleAddColumnTestCase}>
+                      {`${t('label.add')} ${t('label.test-case-lowercase')}:`}
+                    </Button>
+                  </>
+                )}
+              </Col>
+              <Col>
+                <AddCustomTestCaseModal
+                  // testCase={selectedTestCase?.data as TestCase}
+                  edgeData={edgeData}
+                  visible={customTestCaseShowing}
+                  onCancel={handleAddColumnTestCaseCancel}
+                  // eslint-disable-next-line no-console
+                  onUpdate={() => console.log('Update clicked')}
+                />
+              </Col>
+            </>
+          )}
           <Col span={24}>
             <Divider />
             <Typography.Paragraph className="summary-panel-section-title">

@@ -41,7 +41,7 @@ import { generateEntityLink } from '../../../utils/TableUtils';
 import { showErrorToast } from '../../../utils/ToastUtils';
 import RichTextEditor from '../../common/rich-text-editor/RichTextEditor';
 import { EditorContentRef } from '../../common/rich-text-editor/RichTextEditor.interface';
-import { TestCaseFormProps } from '../AddDataQualityTest.interface';
+import { TestCaseFormProps } from '../AddCustomDataQualityTest.interface';
 import ParameterForm from './ParameterForm';
 
 const TestCaseForm: React.FC<TestCaseFormProps> = ({
@@ -147,17 +147,6 @@ const TestCaseForm: React.FC<TestCaseFormProps> = ({
         type: 'alphanumeric',
       })}`;
 
-    //   name,
-    //   displayName: name,
-    //   entityLink: generateEntityLink(
-    //     isColumnFqn ? `${decodedEntityFQN}.${columnName}` : decodedEntityFQN,
-    //     isColumnFqn
-    //   ),
-    //   parameterValues: parameterValues as TestCaseParameterValue[],
-    //   testDefinition: value.testTypeId,
-    //   description: markdownRef.current?.getEditorContent(),
-    //   testSuite: '',
-    // })
     return {
       name,
       displayName: name,

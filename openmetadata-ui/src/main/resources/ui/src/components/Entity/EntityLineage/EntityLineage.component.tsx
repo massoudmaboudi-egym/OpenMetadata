@@ -1697,14 +1697,16 @@ const EntityLineageComponent: FunctionComponent<EntityLineageProp> = ({
               }}
             />
           ) : (
-            <EntityInfoDrawer
-              isMainNode={
-                selectedNode.name === updatedLineageData?.entity?.name
-              }
-              selectedNode={selectedNode}
-              show={isDrawerOpen}
-              onCancel={closeDrawer}
-            />
+            <>
+              <EntityInfoDrawer
+                isMainNode={
+                  selectedNode.name === updatedLineageData?.entity?.name
+                }
+                selectedNode={selectedNode}
+                show={isDrawerOpen}
+                onCancel={closeDrawer}
+              />
+            </>
           ))}
         <EntityLineageSidebar newAddedNode={newAddedNode} show={isEditMode} />
         {showDeleteModal && (
