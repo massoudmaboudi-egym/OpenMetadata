@@ -170,7 +170,9 @@ const EdgeInfoDrawer = ({
                       size="small"
                       // type="text"
                       onClick={handleAddColumnTestCase}>
-                      {`${t('label.add')} ${t('label.test-case-lowercase')}:`}
+                      {`${t('label.add')} ${t('label.new').toLowerCase()} ${t(
+                        'label.test-case-lowercase'
+                      )}`}
                     </Button>
                   </>
                 )}
@@ -182,7 +184,8 @@ const EdgeInfoDrawer = ({
                   visible={customTestCaseShowing}
                   onCancel={handleAddColumnTestCaseCancel}
                   // eslint-disable-next-line no-console
-                  onUpdate={() => console.log('Update clicked')}
+                  // onUpdate={() => console.log('Update clicked')}
+                  onSubmit={() => setCustomTestCaseShowing(false)}
                 />
               </Col>
             </>

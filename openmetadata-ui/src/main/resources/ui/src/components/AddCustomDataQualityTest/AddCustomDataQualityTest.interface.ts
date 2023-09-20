@@ -73,4 +73,5 @@ export interface AddCustomTestCaseModalProps {
   edgeData: EdgeInformationType;
   onCancel: () => void;
   onUpdate?: (testCase: TestCase) => void;
+  onSubmit: () => void;
 }

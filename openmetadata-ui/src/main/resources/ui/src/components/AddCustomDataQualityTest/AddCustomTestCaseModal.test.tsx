@@ -26,6 +26,7 @@ const mockProps: AddCustomTestCaseModalProps = {
   edgeData: MOCK_TEST_CASE[0] as EdgeInformationType,
   onCancel: jest.fn(),
   onUpdate: jest.fn(),
+  onSubmit: jest.fn(),
 };
 
 jest.mock('../common/rich-text-editor/RichTextEditor', () => {

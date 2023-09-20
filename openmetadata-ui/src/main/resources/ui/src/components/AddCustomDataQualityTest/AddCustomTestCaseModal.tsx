@@ -98,13 +98,15 @@ const AddCustomTestCaseModal: React.FC<AddCustomTestCaseModalProps> = ({
   // testCase,
   edgeData,
   onCancel,
-  onUpdate,
+  // onUpdate
+  onSubmit,
 }) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
   // const [selectedDefinition, setSelectedDefinition] =
   //   useState<TestDefinition>();
   const [isLoading, setIsLoading] = useState(true);
+  // const [isFormOpen, setIsFormOpen] = useState(false);
   // const [isUpdate, _] = useState(edgeData === undefined);
   const [isLoadingOnSave, setIsLoadingOnSave] = useState(false);
   const [testSuiteData, setTestSuiteData] = useState<TestSuite>();
@@ -128,7 +130,7 @@ const AddCustomTestCaseModal: React.FC<AddCustomTestCaseModalProps> = ({
   );
 
   useEffect(() => {
-    onUpdate?.name;
+    // onUpdate?.name;
   }, []);
 
   useEffect(() => {
@@ -154,6 +156,7 @@ const AddCustomTestCaseModal: React.FC<AddCustomTestCaseModalProps> = ({
       const sortedColumns = sortBy(columns, (o) => o.value.toLowerCase());
       setSourceTableColumns(sortedColumns);
     }
+    // setIsFormOpen(true)
   }, [sourceTable]);
 
   useEffect(() => {
@@ -172,16 +175,12 @@ const AddCustomTestCaseModal: React.FC<AddCustomTestCaseModalProps> = ({
   }, [targetTable]);
 
   const extractTableFQN = (table: Table | undefined) => {
-    if (table) {
-      const nameWithoutSource: string[] = table.fullyQualifiedName
-        ?.split('.')
-        .slice(1, -1) as string[];
-      nameWithoutSource.push(`"${table.name}"`);
+    const nameWithoutSource: string[] = table?.fullyQualifiedName
+      ?.split('.')
+      .slice(1, -1) as string[];
+    nameWithoutSource.push(`"${table?.name}"`);
 
-      return nameWithoutSource.join('.');
-    }
-
-    return;
+    return nameWithoutSource.join('.');
   };
 
   const createTestCaseObj = (value: {
@@ -189,8 +188,6 @@ const AddCustomTestCaseModal: React.FC<AddCustomTestCaseModalProps> = ({
     params: Record<string, string | { [key: string]: string }[]>;
     testTypeId: string;
   }): CreateTestCase => {
-    // console.log("value", value);
-
     const parameterValues = Object.entries(value.params || {}).map(
       ([key, value]) => ({
         name: key,
@@ -234,8 +231,6 @@ const AddCustomTestCaseModal: React.FC<AddCustomTestCaseModalProps> = ({
   };
 
   const handleFormSubmit: FormProps['onFinish'] = async (value) => {
-    // console.log('Form Data:', value)
-
     const standardValues: {
       testName: string;
       params: Record<string, string | { [key: string]: string }[]>;
@@ -250,7 +245,7 @@ const AddCustomTestCaseModal: React.FC<AddCustomTestCaseModalProps> = ({
     };
 
     const testCasePayload = createTestCaseObj(standardValues);
-    // console.log('testCasePayload', testCasePayload);
+    onSubmit();
 
     try {
       setIsLoadingOnSave(true);
@@ -415,7 +410,7 @@ const AddCustomTestCaseModal: React.FC<AddCustomTestCaseModalProps> = ({
       maskClosable={false}
       okText={t('label.submit')}
       open={visible}
-      title={`Add Column Test Case for ${edgeData.sourceData?.value} and ${edgeData.targetData?.value} `}
+      title={`Test case for ${edgeData.sourceData?.value} and ${edgeData.targetData?.value} `}
       width={960}
       onCancel={onCancel}
       onOk={() => form.submit()}>
